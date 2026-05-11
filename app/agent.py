@@ -4,8 +4,12 @@ import re
 from dataclasses import dataclass, field
 from typing import Iterable
 
-from app.catalog import load_catalog
-from app.models import ChatMessage, ChatResponse, Recommendation
+try:
+    from app.catalog import load_catalog
+    from app.models import ChatMessage, ChatResponse, Recommendation
+except ModuleNotFoundError:  # pragma: no cover - supports file-based runners
+    from catalog import load_catalog
+    from models import ChatMessage, ChatResponse, Recommendation
 
 
 TEST_TYPE_LABELS = {
