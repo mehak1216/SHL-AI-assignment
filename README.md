@@ -48,6 +48,14 @@ Then open:
 - `http://127.0.0.1:8000/health`
 - `http://127.0.0.1:8000/docs`
 
+## Streamlit deployment
+
+If you want a Streamlit Cloud demo instead of deploying the FastAPI API service, use:
+
+- main file path: `streamlit_app.py`
+
+This Streamlit app reuses the same recommendation logic, but it is a demo wrapper rather than the assignment's required FastAPI `/health` and `/chat` deployment target.
+
 ## API contract
 
 Request schema:

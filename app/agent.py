@@ -343,6 +343,11 @@ def _compare_assessments(state: ConversationState) -> str:
     names = state.comparison_targets[:2]
     if len(names) < 2:
         return "Please name the two SHL assessments you want compared."
+    if any(name not in indexed for name in names):
+        return (
+            "I could not ground both comparison targets in the local SHL catalog. "
+            "Please use the full assessment names or ask for a recommendation shortlist instead."
+        )
 
     first = indexed[names[0]]
     second = indexed[names[1]]
