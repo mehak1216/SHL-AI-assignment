@@ -145,6 +145,28 @@ The tests cover:
 - refinement constraints like excluding personality tests
 - best-effort behavior near the evaluator turn cap
 
+## Evaluation
+
+Run the offline evaluation harness with:
+
+```bash
+python scripts/evaluate_agent.py
+```
+
+It evaluates labeled conversation cases in `data/evaluation_cases.json` and reports:
+
+- `Recall@10` for shortlist cases as a retrieval-quality metric
+- `Precision@10` as a recommendation relevance proxy
+- groundedness pass rate by checking that all returned URLs exist in the SHL catalog
+- schema pass rate for response-shape correctness
+- behavior pass rate across clarification, refinement, comparison, refusal, and turn-cap scenarios
+
+You can point the script at another labeled set with:
+
+```bash
+python scripts/evaluate_agent.py --cases data/evaluation_cases.json
+```
+
 ## Submission checklist
 
 - Deploy the FastAPI service and keep `/health` and `/chat` reachable.

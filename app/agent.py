@@ -208,6 +208,12 @@ def _parse_state(messages: list[ChatMessage]) -> ConversationState:
         if any(_matches(state.user_history_text, keyword) for keyword in keywords):
             state.requested_types.add(test_type)
 
+    if state.domains and "P" in state.requested_types and any(
+        phrase in state.user_history_text
+        for phrase in ("add personality", "personality too", "include personality", "with personality")
+    ):
+        state.requested_types.add("K")
+
     for test_type, keywords in NEGATED_TYPE_HINTS.items():
         if any(_matches(state.user_history_text, keyword) for keyword in keywords):
             state.excluded_types.add(test_type)

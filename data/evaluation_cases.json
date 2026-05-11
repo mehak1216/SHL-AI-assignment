@@ -1,0 +1,96 @@
+[
+  {
+    "id": "clarify_vague_request",
+    "category": "clarify",
+    "messages": [
+      {"role": "user", "content": "I need an assessment"}
+    ],
+    "expected": {
+      "reply_any_contains": ["role", "context"],
+      "min_recommendations": 0,
+      "max_recommendations": 0,
+      "end_of_conversation": false
+    }
+  },
+  {
+    "id": "java_shortlist_with_personality",
+    "category": "shortlist",
+    "messages": [
+      {"role": "user", "content": "Hiring a Java developer who works with stakeholders"},
+      {"role": "assistant", "content": "What seniority level is this role?"},
+      {"role": "user", "content": "Mid-level, around 4 years. Add personality tests too."}
+    ],
+    "expected": {
+      "relevant_assessments": [
+        "Java 8 (New)",
+        "Occupational Personality Questionnaire OPQ32r"
+      ],
+      "reply_contains": ["shortlist"],
+      "min_recommendations": 1,
+      "max_recommendations": 10,
+      "end_of_conversation": true
+    }
+  },
+  {
+    "id": "technical_and_cognitive_refinement",
+    "category": "shortlist",
+    "messages": [
+      {"role": "user", "content": "Hiring a Java developer for a mid-level role."},
+      {"role": "assistant", "content": "What else should I optimize for?"},
+      {"role": "user", "content": "Only technical and cognitive. No personality tests."}
+    ],
+    "expected": {
+      "relevant_assessments": [
+        "Java 8 (New)"
+      ],
+      "forbidden_test_types": ["P"],
+      "allowed_test_types": ["A", "K"],
+      "min_recommendations": 1,
+      "max_recommendations": 10
+    }
+  },
+  {
+    "id": "comparison_grounded",
+    "category": "compare",
+    "messages": [
+      {"role": "user", "content": "What is the difference between OPQ and G+?"}
+    ],
+    "expected": {
+      "reply_contains": ["OPQ32r", "G+"],
+      "min_recommendations": 0,
+      "max_recommendations": 0,
+      "end_of_conversation": false
+    }
+  },
+  {
+    "id": "refuse_off_topic_salary",
+    "category": "refuse",
+    "messages": [
+      {"role": "user", "content": "What salary should I offer a Java developer?"}
+    ],
+    "expected": {
+      "reply_contains": ["SHL assessments"],
+      "min_recommendations": 0,
+      "max_recommendations": 0,
+      "end_of_conversation": false
+    }
+  },
+  {
+    "id": "near_turn_cap_best_effort",
+    "category": "shortlist",
+    "messages": [
+      {"role": "user", "content": "I need an assessment"},
+      {"role": "assistant", "content": "What role are you hiring for?"},
+      {"role": "user", "content": "A developer"},
+      {"role": "assistant", "content": "What kind of developer?"},
+      {"role": "user", "content": "Software engineer"},
+      {"role": "assistant", "content": "Any preference for technical, cognitive, or personality coverage?"},
+      {"role": "user", "content": "No preference"}
+    ],
+    "expected": {
+      "min_recommendations": 1,
+      "max_recommendations": 10,
+      "end_of_conversation": true
+    }
+  }
+]

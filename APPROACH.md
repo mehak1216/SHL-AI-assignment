@@ -61,9 +61,9 @@ To respect the evaluator turn budget, the agent stops asking repeated clarificat
 
 ## Evaluation
 
-The code includes both agent-level and API-level tests.
+The code includes both agent-level/API-level tests and an offline labeled evaluation harness in `scripts/evaluate_agent.py`.
 
-Covered behaviors include:
+Behavioral coverage includes:
 
 - health endpoint contract
 - chat endpoint schema compliance
@@ -74,6 +74,16 @@ Covered behaviors include:
 - exclusion refinements such as "no personality tests"
 - best-effort behavior near the turn cap
 
+The offline evaluator reads `data/evaluation_cases.json` and reports:
+
+- `Recall@10` on shortlist cases to measure retrieval quality
+- `Precision@10` as a recommendation relevance proxy
+- groundedness pass rate by verifying every returned URL exists in the local SHL catalog
+- schema pass rate
+- behavior pass rate across clarify, shortlist, compare, and refuse scenarios
+
+This gives the project a lightweight but concrete way to measure recommendation quality and regression risk even without access to the full private evaluation harness.
+
 ## What Did Not Work Well
 
 The biggest limitation in this local environment was direct network access to the SHL website, so the repository currently includes a starter sample catalog and a bootstrap script for generating the full catalog on a machine with internet access.
@@ -82,5 +92,5 @@ The current ranking approach is intentionally deterministic and explainable, but
 
 - stronger job-description parsing
 - synonym expansion from real trace data
-- offline evaluation against the public conversation traces
-- retrieval tuning based on Recall@10
+- evaluation against the official public conversation traces
+- retrieval tuning against a broader Recall@10 benchmark
